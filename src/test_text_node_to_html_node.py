@@ -34,13 +34,6 @@ class Test_text_node_to_html_node(unittest.TestCase):
         self.assertEqual(html_node.tag, "a")
         self.assertEqual(html_node.value, "This is a link node", {"href":"/homepage"})
 
-    # def test_image(self):
-    #     node = TextNode("", TextType.IMAGE, "/homepage")
-    #     html_node = text_node_to_html_node(node)
-    #     self.assertEqual(html_node.tag, "img")
-    #     self.assertEqual(html_node.value, "")
-    #     self.assertEqual(html_node.props, {"src": "/homepage","alt": ""})
-    #
     def test_image(self):
          node = TextNode("This is an image", TextType.IMAGE, "https://www.boot.dev")
          html_node = text_node_to_html_node(node)
