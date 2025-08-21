@@ -4,10 +4,33 @@ from markdown_blocks import (
     markdown_to_blocks,
     block_to_block_type,
     BlockType,
+    extract_title
 )
 
 
 class TestMarkdownToHTML(unittest.TestCase):
+
+    def extract_h1(self):
+        md = """
+        ### This is not the h1
+
+
+        # Title of the document
+
+
+        This is **bolded** paragraph
+
+        This is another paragraph with _italic_ text and `code` here
+        This is the same paragraph on a new line
+
+        - This is a list
+        - with items
+        """
+        self.assertEqual(extract_title(md), "Title of the document")
+
+
+
+
     def test_markdown_to_blocks(self):
         md = """
 This is **bolded** paragraph

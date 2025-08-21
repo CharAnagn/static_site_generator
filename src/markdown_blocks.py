@@ -1,5 +1,7 @@
 from enum import Enum
+import os
 
+from copy_dir_contents import copy_files
 from htmlnode import ParentNode
 from inline_markdown import text_to_textnodes
 from textnode import text_node_to_html_node, TextNode, TextType
@@ -12,6 +14,43 @@ class BlockType(Enum):
     QUOTE = "quote"
     OLIST = "ordered_list"
     ULIST = "unordered_list"
+
+
+def generate_page(from_path, template_path, dest_path):
+    print(f"Generating page from {from_path} to {dest_path} using {template_path}")
+
+    with open(from_path, "r") as f:
+        markdown_content = f.read()
+
+    with open(template_path, "r") as f:
+        template_content = f.read()
+
+    html_node = markdown_to_html_node(markdown_content)
+    html_string = html_node.to_html()
+
+    title = extract_title(markdown_content)
+
+    modified_content = template_content.replace("{{ Title }}", title).replace("{{ Content }}", html_string)
+
+
+    dir_name = os.path.dirname(dest_path)
+    if dir_name:
+        os.makedirs(dir_name, exist_ok=True)
+
+    with open(dest_path, "w") as f:
+        f.write(modified_content)
+
+
+
+def extract_title(markdown):
+    blocks = markdown_to_blocks(markdown)
+
+    for block in blocks:
+        if block.startswith("# "):
+            return block.replace("# ", '').strip()
+
+    raise Exception("Missing h1 title")
+
 
 
 def markdown_to_blocks(markdown):
