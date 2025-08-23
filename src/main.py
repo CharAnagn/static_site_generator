@@ -1,12 +1,20 @@
 import os
 import shutil
 from copy_dir_contents import copy_files
-from markdown_blocks import generate_page, generate_pages_recursive
+from markdown_blocks import generate_pages_recursive
+import sys
 
 dir_path_static = "./static"
 dir_path_public = "./public"
 
 def main():
+
+    print(sys.argv)
+
+    if (len(sys.argv) > 0):
+        basepath = sys.argv[0]
+    else:
+        basepath = "/"
 
     print("Deleting public directory...")
     if os.path.exists(dir_path_public):
@@ -15,5 +23,5 @@ def main():
     print("Copying static files to public directory...")
     copy_files(dir_path_static, dir_path_public)
 
-    generate_pages_recursive("content","template.html","public")
+    generate_pages_recursive("content","template.html","docs", basepath)
 main()
