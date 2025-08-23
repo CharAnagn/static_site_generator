@@ -9,10 +9,8 @@ dir_path_public = "./public"
 
 def main():
 
-    print(sys.argv)
-
-    if (len(sys.argv) > 0):
-        basepath = sys.argv[0]
+    if (len(sys.argv) > 1):
+        basepath = sys.argv[1]
     else:
         basepath = "/"
 
