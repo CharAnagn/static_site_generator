@@ -1,7 +1,6 @@
 from enum import Enum
 import os
 
-from copy_dir_contents import copy_files
 from pathlib import Path
 from htmlnode import ParentNode
 from inline_markdown import text_to_textnodes
